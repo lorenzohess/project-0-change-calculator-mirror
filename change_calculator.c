@@ -31,6 +31,21 @@ float get_paid_amount(void) {
 }
 
 /*******************************************************************************
+ * int validate_total(float total)
+ * Validate that the total is a positive number.
+ * Parameters:
+ *     total: the purchase total
+ * Returns:
+ *     0 if positive, else -1
+ ******************************************************************************/
+int validate_total_amount(float total) {
+  if (total <= 0) {
+    return -1;
+  }
+  return 0;
+}
+
+/*******************************************************************************
  * int check_amount(float total, float paid)
  * Ensure paid >= total.
  * Parameters:
@@ -52,9 +67,15 @@ void print_formatted(float change);
 
 int main(void) {
   float total = get_purchase_total_amount();
+
+  int is_total_valid = validate_total_amount(total);
+  if (is_total_valid != 0) {
+    return -1;
+  }
   printf("Total: %f\n", total);
 
   float paid = get_paid_amount();
   printf("Total: %f\n", paid);
+
   return 0;
 }
