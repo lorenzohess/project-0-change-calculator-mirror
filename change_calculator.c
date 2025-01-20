@@ -57,9 +57,15 @@ int validate_paid_amount(float paid) { return paid > 0; }
  *     total: the purchase amount
  *     paid: the amount the customer paid
  * Returns:
- *     1 if paid >= total, else 0
+ *     0 if paid < total, else 1
  ******************************************************************************/
-int check_amount(float total, float paid);
+int check_amount(float total, float paid) {
+  if (paid < total) {
+    printf("Insufficient payment.\n");
+    return 0;
+  }
+  return 1;
+}
 
 /*******************************************************************************
  * void print_formatted(float change)
@@ -77,14 +83,16 @@ int main(void) {
   if (!is_total_valid) {
     return -1; // Exit code
   }
-  printf("Total: %f\n", total);
+  /* printf("Total: %f\n", total); */
 
   float paid = get_paid_amount();
   int is_paid_valid = validate_paid_amount(paid);
   if (!is_paid_valid) {
     return -1; // Exit code
   }
-  printf("Total: %f\n", paid);
+  /* printf("Total: %f\n", paid); */
+
+  int is_amount_valid = check_amount(total, paid);
 
   return 0;
 }
