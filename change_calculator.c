@@ -93,11 +93,11 @@ void print_formatted(float change) {
   // Converting dollars to cents allows us to do integer arithmetic and thus
   // avoid floating-point errors.
   const int CENTS_PER_DOLLAR = 100;
-  const int cents_5D = 500;
-  const int cents_1D = 100;
-  const int cents_Q = 25;
-  const int cents_D = 10;
-  const int cents_N = 5;
+  const int CENTS_5D = 5 * CENTS_PER_DOLLAR;
+  const int CENTS_1D = 1 * CENTS_PER_DOLLAR;
+  const int CENTS_Q = 25;
+  const int CENTS_D = 10;
+  const int CENTS_N = 5;
 
   // To ensure floats with decimal > 0.5 are rounded up, add 0.5 cents to the
   // float before the cast. If decimal < 0.5, will still properly round down.
@@ -109,24 +109,24 @@ void print_formatted(float change) {
   // For each denomination, get the count and compute the remaining change.
   // Can't use arrays, so we store each counts in its own variable.
   // $5
-  int denom_count_5D = change_cents / cents_5D;
-  change_cents = decrement_change(change_cents, cents_5D, denom_count_5D);
+  int denom_count_5D = change_cents / CENTS_5D;
+  change_cents = decrement_change(change_cents, CENTS_5D, denom_count_5D);
 
   // $1
-  int denom_count_1D = change_cents / cents_1D;
-  change_cents = decrement_change(change_cents, cents_1D, denom_count_1D);
+  int denom_count_1D = change_cents / CENTS_1D;
+  change_cents = decrement_change(change_cents, CENTS_1D, denom_count_1D);
 
   // Q
-  int denom_count_Q = change_cents / cents_Q;
-  change_cents = decrement_change(change_cents, cents_Q, denom_count_Q);
+  int denom_count_Q = change_cents / CENTS_Q;
+  change_cents = decrement_change(change_cents, CENTS_Q, denom_count_Q);
 
   // D
-  int denom_count_D = change_cents / cents_D;
-  change_cents = decrement_change(change_cents, cents_D, denom_count_D);
+  int denom_count_D = change_cents / CENTS_D;
+  change_cents = decrement_change(change_cents, CENTS_D, denom_count_D);
 
   // N
-  int denom_count_N = change_cents / cents_N;
-  change_cents = decrement_change(change_cents, cents_N, denom_count_N);
+  int denom_count_N = change_cents / CENTS_N;
+  change_cents = decrement_change(change_cents, CENTS_N, denom_count_N);
 
   // P. Remaining change, in cents, is by definition penny count.
   int denom_count_P = change_cents;
