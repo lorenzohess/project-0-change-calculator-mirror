@@ -19,9 +19,9 @@ float get_purchase_total_amount(void) {
 /*******************************************************************************
  * float get_paid_amount(void)
  *
- * Get the amount paid by the user.
+ * Get the amount paid from the user.
  * Returns:
- *     paid: the amount paid
+ *     the amount paid
  ******************************************************************************/
 float get_paid_amount(void) {
   float paid;
@@ -38,7 +38,7 @@ float get_paid_amount(void) {
  * Ensure paid >= total.
  * Parameters:
  *     total: the purchase amount
- *     paid: the amount the customer paid
+ *     paid: the amount paid
  * Returns:
  *     0 if paid < total, else 1
  ******************************************************************************/
@@ -52,7 +52,7 @@ int check_amount(float total, float paid) {
 
 /*******************************************************************************
  * int decrement_change(int change_cents, int denom_value_cents, int
- *denom_count)
+ * denom_count)
  *
  * Decrement the change by a multiple of a denomination value and return it.
  * Parameters:
@@ -60,13 +60,22 @@ int check_amount(float total, float paid) {
  *     denom_value_cents: the denomination value in cents
  *     denom_count: how many denominations to decrement change by
  * Returns:
- *     The change value after being decremented.
+ *     the change value after being decremented
  ******************************************************************************/
 int decrement_change(int change_cents, int denom_value_cents, int denom_count) {
   return change_cents - (denom_value_cents * denom_count);
 }
 
+/*******************************************************************************
+ * void print_denomination(int denom_count, char *denom_name)
+ *
+ * Print the count of a denomination.
+ * Parameters:
+ *     denom_count: the count of the denomination
+ *     denom_name: the string representation of the denomination
+ ******************************************************************************/
 void print_denomination(int denom_count, char *denom_name) {
+  // We shouldn't print anything if the count is 0.
   if (denom_count != 0) {
     printf("  %d - %s\n", denom_count, denom_name);
   }
@@ -77,27 +86,28 @@ void print_denomination(int denom_count, char *denom_name) {
  *
  * Print quantity of denominations needed to give specified change.
  * Parameters:
- *     change: the change to print out
- * Notes: Uses denominations: $5, $1, quarter, dime, nickel, penny.
+ *     change: the change
+ * Notes: Uses denominations $5, $1, quarter, dime, nickel, penny.
  ******************************************************************************/
 void print_formatted(float change) {
+  // Converting dollars to cents allows us to do integer arithmetic and thus
+  // avoid floating-point errors.
   const int CENTS_PER_DOLLAR = 100;
   const int cents_5D = 500;
   const int cents_1D = 100;
   const int cents_Q = 25;
   const int cents_D = 10;
   const int cents_N = 5;
-  const int cents_P = 1;
 
   // To ensure floats with decimal > 0.5 are rounded up, add 0.5 cents to the
-  // float before the cast. See https://cboard.cprogramming.com/c-programming/
+  // float before the cast. If decimal < 0.5, will still properly round down.
+  // See https://cboard.cprogramming.com/c-programming/
   // 107750-converting-float-integer-without-rounding-post793349.html#post793349
   float change_cents_incremented = (change * CENTS_PER_DOLLAR) + 0.5;
-  int change_cents_rounded = (int)change_cents_incremented;
-  int change_cents = change_cents_rounded;
+  int change_cents = (int)change_cents_incremented;
 
   // For each denomination, get the count and compute the remaining change.
-  // Can't use arrays, so hardcode into counts into variables.
+  // Can't use arrays, so we store each counts in its own variable.
   // $5
   int denom_count_5D = change_cents / cents_5D;
   change_cents = decrement_change(change_cents, cents_5D, denom_count_5D);
@@ -128,23 +138,20 @@ void print_formatted(float change) {
   print_denomination(denom_count_D, "D");
   print_denomination(denom_count_N, "N");
   print_denomination(denom_count_P, "P");
-  /* printf("%d - 5D\n", denom_count_5D); */
-  /* printf("%d - 1D\n", denom_count_1D); */
-  /* printf("%d - Q\n", denom_count_Q); */
-  /* printf("%d - D\n", denom_count_D); */
-  /* printf("%d - N\n", denom_count_N); */
-  /* printf("%d - P\n", denom_count_P); */
 }
 
 int main(void) {
+  // Get user input
   float total = get_purchase_total_amount();
   float paid = get_paid_amount();
 
+  // Validate user input
   int is_amount_valid = check_amount(total, paid);
   if (!is_amount_valid) {
-    return -1; // Exit code
+    return -1;
   }
 
+  // Compute change and print
   float change = paid - total;
   print_formatted(change);
 
