@@ -1,0 +1,27 @@
+
+# Change Calculator
+
+This change calculator can replace the change-calculation functionality of a cash register (see project requirements [PDF](change_calculator.pdf).) It prints exact change given a purchase amount and the amount paid, with validation along the way. We print change in US currency with maximum highest denomination first.
+
+Available at [gitlab.com/lorenzohess/project-0-change-calculator](https://gitlab.com/lorenzohess/project-0-change-calculator).
+
+
+## Technical Requirements
+
+No arrays, pointers, or global variables.
+
+
+## Pseudocode
+
+See [pseudocode.txt](pseudocode.txt).
+
+
+## Build
+
+Compile with: `gcc change_calculator.c -Wall -o getChange`.
+
+
+## Usage
+
+In Bash, run with: `./getChange`. Requires executable permissions.
+
