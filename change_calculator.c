@@ -90,7 +90,7 @@ int decrement_change(int change_cents, int denom_value_cents, int denom_count) {
 
 void print_denomination(int denom_count, char *denom_name) {
   if (denom_count != 0) {
-    printf("%d - %s\n", denom_count, denom_name);
+    printf("  %d - %s\n", denom_count, denom_name);
   }
 }
 
