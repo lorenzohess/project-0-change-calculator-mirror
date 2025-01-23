@@ -6,11 +6,10 @@ validate paid
 check_amount()
 
 print_formatted()
- build output string
   for denomination in 5, 1, 0.25, 0.1, 0.05, 0.01
    while change is positive
     while change is greater than denomination
      increment denomination count
      subtract denomination value from change
     update output string for denomination
- print output string
+ print output string with format
