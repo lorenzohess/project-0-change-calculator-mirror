@@ -35,7 +35,7 @@ float get_paid_amount(void) {
 /*******************************************************************************
  * int check_amount(float total, float paid)
  *
- * Ensure paid >= total.
+ * Validate that paid >= total, print warning if not.
  * Parameters:
  *     total: the purchase amount
  *     paid: the amount paid
@@ -108,27 +108,22 @@ void print_formatted(float change) {
 
   // For each denomination, get the count and compute the remaining change.
   // Can't use arrays, so we store each counts in its own variable.
-  // $5
   int denom_count_5D = change_cents / CENTS_5D;
   change_cents = decrement_change(change_cents, CENTS_5D, denom_count_5D);
 
-  // $1
   int denom_count_1D = change_cents / CENTS_1D;
   change_cents = decrement_change(change_cents, CENTS_1D, denom_count_1D);
 
-  // Q
   int denom_count_Q = change_cents / CENTS_Q;
   change_cents = decrement_change(change_cents, CENTS_Q, denom_count_Q);
 
-  // D
   int denom_count_D = change_cents / CENTS_D;
   change_cents = decrement_change(change_cents, CENTS_D, denom_count_D);
 
-  // N
   int denom_count_N = change_cents / CENTS_N;
   change_cents = decrement_change(change_cents, CENTS_N, denom_count_N);
 
-  // P. Remaining change, in cents, is by definition penny count.
+  // Remaining change, in cents, is by definition penny count.
   int denom_count_P = change_cents;
 
   printf("Your change is $%.2f\n", change);
