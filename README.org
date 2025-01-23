@@ -13,6 +13,8 @@ Compile with GCC. Suggested command: =gcc change_calculator.c -Wall -o getChange
 ** Usage
 In Bash, run with: =./getChange=. Requires executable permissions.
 
+The calculator asks the user to input the purchase total, in dollars, and then the amount paid, in dollars.
+
 Example:
 #+begin_src shell
 $ ./getChange
@@ -28,7 +30,7 @@ Your change is $7.65
   1 - N
 #+end_src
 
-Validate that amount paid >= purchase total:
+The calculator validates that amount paid >= purchase total:
 #+begin_src shell
 $ ./getChange
 Input purchase total:
@@ -37,3 +39,5 @@ Input amount paid:
 8
 Insufficient payment.
 #+end_src
+** Sources
+I asked my roommate about how floating point rounding when casting to =int=. I referenced a website for a method to correctly convert =float= to =int= without rounding: https://cboard.cprogramming.com/c-programming/107750-converting-float-integer-without-rounding-post793349.html#post793349 (see line 102).

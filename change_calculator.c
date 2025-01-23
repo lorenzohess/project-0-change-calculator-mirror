@@ -101,8 +101,6 @@ void print_formatted(float change) {
 
   // To ensure floats with decimal > 0.5 are rounded up, add 0.5 cents to the
   // float before the cast. If decimal < 0.5, will still properly round down.
-  // See https://cboard.cprogramming.com/c-programming/
-  // 107750-converting-float-integer-without-rounding-post793349.html#post793349
   float change_cents_incremented = (change * CENTS_PER_DOLLAR) + 0.5;
   int change_cents = (int)change_cents_incremented;
 
