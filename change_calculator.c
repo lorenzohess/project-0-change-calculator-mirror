@@ -10,7 +10,7 @@
 float get_purchase_total_amount(void) {
   float total;
 
-  puts("Input purchase total");
+  puts("Input purchase total:");
   scanf("%f", &total);
 
   return total;
@@ -37,7 +37,7 @@ int validate_total_amount(float total) { return total > 0; }
 float get_paid_amount(void) {
   float paid;
 
-  puts("Input amount paid");
+  puts("Input amount paid:");
   scanf("%f", &paid);
 
   return paid;
@@ -143,7 +143,7 @@ void print_formatted(float change) {
   // P. Remaining change, in cents, is by definition penny count.
   int denom_count_P = change_cents;
 
-  printf("Your change is: %.2f\n", change);
+  printf("Your change is $%.2f\n", change);
   print_denomination(denom_count_5D, "5D");
   print_denomination(denom_count_1D, "1D");
   print_denomination(denom_count_Q, "Q");
