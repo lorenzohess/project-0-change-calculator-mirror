@@ -175,6 +175,9 @@ int main(void) {
   /* printf("Total: %f\n", paid); */
 
   int is_amount_valid = check_amount(total, paid);
+  if (!is_amount_valid) {
+    return -1; // Exit code
+  }
 
   float change = paid - total;
   print_formatted(change);
