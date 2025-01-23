@@ -1,5 +1,30 @@
 #include <stdio.h>
 
+float get_purchase_total_amount(void);
+float get_paid_amount(void);
+int check_amount(float total, float paid);
+int decrement_change(int change_cents, int denom_value_cents, int denom_count);
+void print_denomination(int denom_count, char *denom_name);
+void print_formatted(float change);
+
+int main(void) {
+  // Get user input
+  float total = get_purchase_total_amount();
+  float paid = get_paid_amount();
+
+  // Validate user input
+  int is_amount_valid = check_amount(total, paid);
+  if (!is_amount_valid) {
+    return -1;
+  }
+
+  // Compute change and print
+  float change = paid - total;
+  print_formatted(change);
+
+  return 0;
+}
+
 /*******************************************************************************
  * float get_purchase_total_amount(void)
  *
@@ -131,22 +156,4 @@ void print_formatted(float change) {
   print_denomination(denom_count_D, "D");
   print_denomination(denom_count_N, "N");
   print_denomination(denom_count_P, "P");
-}
-
-int main(void) {
-  // Get user input
-  float total = get_purchase_total_amount();
-  float paid = get_paid_amount();
-
-  // Validate user input
-  int is_amount_valid = check_amount(total, paid);
-  if (!is_amount_valid) {
-    return -1;
-  }
-
-  // Compute change and print
-  float change = paid - total;
-  print_formatted(change);
-
-  return 0;
 }
