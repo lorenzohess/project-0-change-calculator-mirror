@@ -1,8 +1,3 @@
-get total from user
-validate total > 0
-get paid from user
-validate paid > 0
-
 check_amount()
  return paid >= total
 
@@ -14,3 +9,12 @@ print_formatted()
      subtract denomination value from change
     update output string for denomination
  print output string with format
+
+main()
+ get total from user
+ get paid from user
+
+ check_amount(total, paid)
+
+ change is paid less total
+ print_formatted(change)
