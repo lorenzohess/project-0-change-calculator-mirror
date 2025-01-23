@@ -74,7 +74,45 @@ int check_amount(float total, float paid) {
  *     change: the change to print out
  * Notes: Uses denominations: $5, $1, quarter, dime, nickel, penny.
  ******************************************************************************/
-void print_formatted(float change);
+void print_formatted(float change) {
+  const int CENTS_PER_DOLLAR = 100;
+  const int cents_5D = 500;
+  const int cents_1D = 100;
+  const int cents_Q = 25;
+  const int cents_D = 10;
+  const int cents_N = 5;
+  const int cents_P = 1;
+
+  int change_cents = change * CENTS_PER_DOLLAR;
+
+  // For each denomination, get the count and compute the remaining change.
+  // Can't use arrays, so hardcode into counts into variables.
+  // $5
+  int denom_count_5D = change_cents / cents_5D;
+  change_cents -= cents_5D * denom_count_5D;
+
+  // $1
+  int denom_count_1D = change_cents / cents_1D;
+  change_cents -= cents_1D * denom_count_1D;
+
+  // Q
+  int denom_count_Q = change_cents / cents_Q;
+  change_cents -= cents_Q * denom_count_Q;
+
+  // D
+  int denom_count_D = change_cents / cents_D;
+  change_cents -= cents_D * denom_count_D;
+
+  // N
+  int denom_count_N = change_cents / cents_N;
+  change_cents -= cents_N * denom_count_N;
+
+  // P
+  int denom_count_P = change_cents / cents_P;
+  change_cents -= cents_P * denom_count_P;
+
+  printf("Your change is: %.2f\n", change);
+}
 
 int main(void) {
   float total = get_purchase_total_amount();
@@ -93,6 +131,9 @@ int main(void) {
   /* printf("Total: %f\n", paid); */
 
   int is_amount_valid = check_amount(total, paid);
+
+  float change = paid - total;
+  print_formatted(change);
 
   return 0;
 }
