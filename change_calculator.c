@@ -1,16 +1,17 @@
 #include <stdio.h>
 
-float get_purchase_total_amount(void);
-float get_paid_amount(void);
+float get_purchase_total_amount_dollars(void);
+float get_paid_amount_dollars(void);
 int check_amount(float total, float paid);
-int decrement_change(int change_cents, int denom_value_cents, int denom_count);
+int decrement_change_cents(int change_cents, int denom_value_cents,
+                           int denom_count);
 void print_denomination(int denom_count, char *denom_name);
 void print_formatted(float change);
 
 int main(void) {
   // Get user input
-  float total = get_purchase_total_amount();
-  float paid = get_paid_amount();
+  float total = get_purchase_total_amount_dollars();
+  float paid = get_paid_amount_dollars();
 
   // Validate user input
   int is_amount_valid = check_amount(total, paid);
@@ -26,13 +27,14 @@ int main(void) {
 }
 
 /*******************************************************************************
- * float get_purchase_total_amount(void)
+ * float get_purchase_total_amount_dollars(void)
  *
  * Get the purchase amount from the user.
  * Returns:
  *     the purchase amount
+ * Notes: assume amount in dollars.
  ******************************************************************************/
-float get_purchase_total_amount(void) {
+float get_purchase_total_amount_dollars(void) {
   float total;
 
   puts("Input purchase total:");
@@ -42,13 +44,14 @@ float get_purchase_total_amount(void) {
 }
 
 /*******************************************************************************
- * float get_paid_amount(void)
+ * float get_paid_amount_dollars(void)
  *
  * Get the amount paid from the user.
  * Returns:
  *     the amount paid
+ * Notes: assume amount in dollars.
  ******************************************************************************/
-float get_paid_amount(void) {
+float get_paid_amount_dollars(void) {
   float paid;
 
   puts("Input amount paid:");
@@ -76,7 +79,7 @@ int check_amount(float total, float paid) {
 }
 
 /*******************************************************************************
- * int decrement_change(int change_cents, int denom_value_cents, int
+ * int decrement_change_cents(int change_cents, int denom_value_cents, int
  * denom_count)
  *
  * Decrement the change by a multiple of a denomination value and return it.
@@ -87,7 +90,8 @@ int check_amount(float total, float paid) {
  * Returns:
  *     the change value after being decremented
  ******************************************************************************/
-int decrement_change(int change_cents, int denom_value_cents, int denom_count) {
+int decrement_change_cents(int change_cents, int denom_value_cents,
+                           int denom_count) {
   return change_cents - (denom_value_cents * denom_count);
 }
 
@@ -101,7 +105,7 @@ int decrement_change(int change_cents, int denom_value_cents, int denom_count) {
  ******************************************************************************/
 void print_denomination(int denom_count, char *denom_name) {
   // We shouldn't print anything if the count is 0.
-  if (denom_count != 0) {
+  if (0 != denom_count) {
     printf("%3d - %s\n", denom_count, denom_name);
   }
 }
@@ -124,27 +128,30 @@ void print_formatted(float change) {
   const int CENTS_D = 10;
   const int CENTS_N = 5;
 
+  // Convert change to cents, but keep as float
+  float change_cents_float = change * CENTS_PER_DOLLAR;
+
   // To ensure floats with decimal > 0.5 are rounded up, add 0.5 cents to the
   // float before the cast. If decimal < 0.5, will still properly round down.
-  float change_cents_incremented = (change * CENTS_PER_DOLLAR) + 0.5;
+  float change_cents_incremented = change_cents_float + 0.5;
   int change_cents = (int)change_cents_incremented;
 
   // For each denomination, get the count and compute the remaining change.
   // Can't use arrays, so we store each counts in its own variable.
   int denom_count_5D = change_cents / CENTS_5D;
-  change_cents = decrement_change(change_cents, CENTS_5D, denom_count_5D);
+  change_cents = decrement_change_cents(change_cents, CENTS_5D, denom_count_5D);
 
   int denom_count_1D = change_cents / CENTS_1D;
-  change_cents = decrement_change(change_cents, CENTS_1D, denom_count_1D);
+  change_cents = decrement_change_cents(change_cents, CENTS_1D, denom_count_1D);
 
   int denom_count_Q = change_cents / CENTS_Q;
-  change_cents = decrement_change(change_cents, CENTS_Q, denom_count_Q);
+  change_cents = decrement_change_cents(change_cents, CENTS_Q, denom_count_Q);
 
   int denom_count_D = change_cents / CENTS_D;
-  change_cents = decrement_change(change_cents, CENTS_D, denom_count_D);
+  change_cents = decrement_change_cents(change_cents, CENTS_D, denom_count_D);
 
   int denom_count_N = change_cents / CENTS_N;
-  change_cents = decrement_change(change_cents, CENTS_N, denom_count_N);
+  change_cents = decrement_change_cents(change_cents, CENTS_N, denom_count_N);
 
   // Remaining change, in cents, is by definition penny count.
   int denom_count_P = change_cents;
